@@ -1,58 +1,244 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Appointment API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Laravel alapú orvosi időpontfoglaló REST API.
 
-## About Laravel
+## Technológiák
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+* PHP 8.3
+* Laravel 11
+* SQLite
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Telepítés
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Projekt klónozása után:
 
 ```bash
-composer require laravel/boost --dev
+composer install
 
-php artisan boost:install
+cp .env.example .env
+
+php artisan key:generate
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+`.env` konfiguráció:
 
-## Contributing
+```env
+DB_CONNECTION=sqlite
+DB_DATABASE=database/database.sqlite
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Migrációk futtatása:
 
-## Code of Conduct
+```bash
+php artisan migrate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Alkalmazás indítása:
 
-## Security Vulnerabilities
+```bash
+php artisan serve
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Az API alapértelmezett címe:
 
-## License
+```text
+http://127.0.0.1:8000/api
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Projekt struktúra
+
+Az üzleti logika elkülönítve került a Service rétegbe.
+
+```text
+app/
+├── Exceptions/
+├── Http/
+│   ├── Controllers/
+│   └── Requests/
+├── Models/
+└── Services/
+```
+
+### Rétegek felelőssége
+
+* **Requests**: input validáció
+* **Controllers**: HTTP réteg és válaszok
+* **Services**: üzleti logika
+* **Models**: adatkapcsolatok és ORM
+* **BusinessRuleException**: üzleti szabály kivételek kezelése
+
+## Megvalósított funkciók
+
+### Doctors
+
+* Orvos létrehozása
+* Orvos listázása
+* Orvos lekérdezése
+* Orvos módosítása
+* Orvos törlése
+
+### Patients
+
+* Páciens létrehozása
+* Páciens listázása
+* Páciens lekérdezése
+* Páciens módosítása
+* Páciens törlése
+
+### Availabilities
+
+Rendelési időablakok kezelése.
+
+Üzleti szabályok:
+
+* A rendelési idő csak jövőbeli lehet
+* Minimum 30 perces időablak hozható létre
+* Egy orvos rendelési időablakai nem fedhetik egymást
+
+### Appointments
+
+Foglalások kezelése és státuszváltások.
+
+Üzleti szabályok:
+
+* Csak jövőbeli időpontra lehet foglalni
+* A foglalásnak egy rendelési időablakon belül kell lennie
+* Már foglalt időpont nem foglalható újra
+* Egy páciensnek nem lehet átfedő foglalása
+* A foglalás kezdeti állapota: `pending`
+
+### Állapotátmenetek
+
+```text
+pending -> confirmed
+pending -> cancelled
+
+confirmed -> completed
+confirmed -> cancelled
+
+completed -> végállapot
+cancelled -> végállapot
+```
+
+További szabály:
+
+* Confirmed foglalás csak legalább 24 órával a kezdési időpont előtt mondható le.
+
+## API végpontok
+
+### Doctors
+
+```http
+GET    /api/doctors
+POST   /api/doctors
+GET    /api/doctors/{doctor}
+PUT    /api/doctors/{doctor}
+PATCH  /api/doctors/{doctor}
+DELETE /api/doctors/{doctor}
+```
+
+### Patients
+
+```http
+GET    /api/patients
+POST   /api/patients
+GET    /api/patients/{patient}
+PUT    /api/patients/{patient}
+PATCH  /api/patients/{patient}
+DELETE /api/patients/{patient}
+```
+
+### Availabilities
+
+```http
+POST   /api/availabilities
+GET    /api/doctors/{doctor}/availabilities
+```
+
+### Appointments
+
+```http
+POST   /api/appointments
+
+PATCH  /api/appointments/{appointment}/confirm
+PATCH  /api/appointments/{appointment}/complete
+PATCH  /api/appointments/{appointment}/cancel
+
+GET    /api/patients/{patient}/appointments
+```
+
+Páciens foglalásainak szűrése státusz szerint:
+
+```http
+GET /api/patients/{patient}/appointments?status=confirmed
+```
+
+Lehetséges státuszok:
+
+```text
+pending
+confirmed
+completed
+cancelled
+```
+
+## Példa válaszok
+
+### Sikeres válasz
+
+```json
+{
+    "status": "success",
+    "message": "Doctor created successfully.",
+    "data": {
+        "id": 1,
+        "name": "Dr. Teszt Elek",
+        "email": "teszt.elek@example.com",
+        "specialization": "Háziorvos"
+    }
+}
+```
+
+### Validációs hiba
+
+```json
+{
+    "status": "error",
+    "message": "Validation failed.",
+    "errors": {
+        "email": [
+            "The email field must be a valid email address."
+        ]
+    }
+}
+```
+
+### Nem található erőforrás
+
+```json
+{
+    "status": "error",
+    "message": "Resource not found."
+}
+```
+
+### Üzleti szabály sérülése
+
+```json
+{
+    "status": "error",
+    "message": "Availability overlaps an existing availability."
+}
+```
+
+## Postman
+
+A projekt tartalmaz Postman collectiont a végpontok teszteléséhez.
+
+```text
+postman/appointment-api.postman_collection.json
+```
+
+## Megjegyzés
+
+Az alkalmazás publikus API-ként működik, autentikáció nélkül, a feladatkiírásnak megfelelően.

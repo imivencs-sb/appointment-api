@@ -1,0 +1,429 @@
+{
+  "info": {
+    "_postman_id": "090d1295-c730-4959-a0eb-c53458d1a793",
+    "name": "Appointment API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "32228253",
+    "_collection_link": "https://go.postman.co/collection/32228253-090d1295-c730-4959-a0eb-c53458d1a793?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Doctor",
+      "item": [
+        {
+          "name": "Doctors List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{DOMAIN}}/api/doctors",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "doctors"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Doctor Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Dr. Bor Piroska\",\"email\":\"borgyogyasz@example.com\",\"specialization\":\"bőrgyógyász\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/doctors",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "doctors"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Doctor View",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Dr. Teszt Endre\",\"email\":\"endrekrinologia@example.com\",\"specialization\":\"endokrinológus\"}"
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/doctors/3",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "doctors",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Doctor Update",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Dr. Bőr Piroska\",\"email\":\"borgyogyasz@example.com\",\"specialization\":\"szívsebész\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/doctors/4",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "doctors",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Doctor Delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Dr. Bőr Piroska\",\"email\":\"borgyogyasz@example.com\",\"specialization\":\"miértnem?\"}"
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/doctors/3",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "doctors",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Patient",
+      "item": [
+        {
+          "name": "Patients List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{DOMAIN}}/api/patients",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "patients"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Patient Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Teszt Paciens 3\",\"email\":\"paciens3@example.com\",\"phone\":\"+36301234567\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/patients",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "patients"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Patient View",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Dr. Teszt Endre\",\"email\":\"endrekrinologia@example.com\",\"specialization\":\"endokrinológus\"}"
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/patients/3",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "patients",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Patient Update",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Mákos Guba\",\"email\":\"guba@example.com\",\"phone\":\"+36111222333\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/patients/3",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "patients",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Patient Delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Dr. Bőr Piroska\",\"email\":\"borgyogyasz@example.com\",\"specialization\":\"miértnem?\"}"
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/patients/2",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "patients",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Availability",
+      "item": [
+        {
+          "name": "Availabilities List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{DOMAIN}}/api/doctors/1/availabilities",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "doctors",
+                "1",
+                "availabilities"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Availabilities Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"doctor_id\":1,\r\n    \"starts_at\":\"2026-06-16 08:00:00\",\r\n    \"ends_at\":\"2026-06-16 09:00:00\",\r\n    \"slot_duration_minutes\":60\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/availabilities",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "availabilities"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Appointment",
+      "item": [
+        {
+          "name": "Appointments List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{DOMAIN}}/api/patients/1/appointments",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "patients",
+                "1",
+                "appointments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Appointments Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"patient_id\":1,\r\n    \"doctor_id\":1,\r\n    \"start_time\":\"2026-06-16 11:20:00\",\r\n    \"end_time\":\"2026-06-16 11:30:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{DOMAIN}}/api/appointments",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "appointments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "App Cancel",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{DOMAIN}}/api/appointments/1/cancel",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "appointments",
+                "1",
+                "cancel"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "App Confirm",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{DOMAIN}}/api/appointments/1/confirm",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "appointments",
+                "1",
+                "confirm"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "App Complete",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{DOMAIN}}/api/appointments/1/complete",
+              "host": [
+                "{{DOMAIN}}"
+              ],
+              "path": [
+                "api",
+                "appointments",
+                "1",
+                "complete"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
