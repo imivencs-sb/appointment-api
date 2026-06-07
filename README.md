@@ -239,6 +239,24 @@ A projekt tartalmaz Postman collectiont a végpontok teszteléséhez.
 postman/appointment-api.postman_collection.json
 ```
 
+## Tesztek
+
+A projekt Feature teszteket tartalmaz a kritikus üzleti szabályok ellenőrzésére.
+
+Teszt futtatása:
+
+```bash
+php artisan test --filter=AppointmentBusinessRulesTest
+```
+
+A tesztek az alábbi üzleti szabályokat ellenőrzik:
+
+- múltbeli rendelési idő nem hozható létre
+- átfedő rendelési idők nem engedélyezettek
+- múltbeli időpontra nem foglalható vizit
+- foglalt slot nem foglalható újra
+- confirmed foglalás 24 órán belül nem mondható le
+
 ## Megjegyzés
 
 Az alkalmazás publikus API-ként működik, autentikáció nélkül, a feladatkiírásnak megfelelően.
