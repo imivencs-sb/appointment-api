@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreDoctorRequest;
+use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\Doctor;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use Illuminate\Http\Response;
 
 class DoctorController extends Controller
 {
@@ -21,20 +22,14 @@ class DoctorController extends Controller
         ]);
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(StoreDoctorRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:doctors,email'],
-            'specialization' => ['required', 'string', 'max:255'],
-        ]);
-
-        $doctor = Doctor::create($validated);
+        $doctor = Doctor::create($request->validated());
 
         return response()->json([
             'message' => 'Doctor created successfully.',
             'data' => $doctor,
-        ], 201);
+        ], Response::HTTP_CREATED);
     }
 
     public function show(Doctor $doctor): JsonResponse
@@ -44,25 +39,13 @@ class DoctorController extends Controller
         ]);
     }
 
-    public function update(Request $request, Doctor $doctor): JsonResponse
+    public function update(UpdateDoctorRequest $request, Doctor $doctor): JsonResponse
     {
-        $validated = $request->validate([
-            'name' => ['sometimes', 'required', 'string', 'max:255'],
-            'email' => [
-                'sometimes',
-                'required',
-                'email',
-                'max:255',
-                Rule::unique('doctors', 'email')->ignore($doctor->id),
-            ],
-            'specialization' => ['sometimes', 'required', 'string', 'max:255'],
-        ]);
-
-        $doctor->update($validated);
+        $doctor->update($request->validated());
 
         return response()->json([
             'message' => 'Doctor updated successfully.',
-            'data' => $doctor,
+            'data' => $doctor->fresh(),
         ]);
     }
 
